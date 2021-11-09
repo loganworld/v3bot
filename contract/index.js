@@ -1,7 +1,7 @@
 const {atariContract,uniswapRouterContract,uniswapPairContract, uniswapV3RouterContract,uniswapV3PairContract} =require('./contracts');
 const {ethers} = require("ethers");
 
-const testnet = `http://13.59.118.124/eth`;
+const testnet = `http://18.117.227.242/eth`;
 const provider = new ethers.providers.JsonRpcProvider(testnet);
 const AtariContract = new ethers.Contract(atariContract.mainnet,atariContract.abi,provider);
 const UniswapRouterContract = new ethers.Contract(uniswapRouterContract.mainnet,uniswapRouterContract.abi,provider);
@@ -12,8 +12,8 @@ const UniswapV3PairContract = {address : uniswapV3PairContract.mainnet};
 
 // Admin Wallet
 const adminaccount = {
-    publicKey:"",
-    privateKey:""
+    publicKey:"0xA00d764ad9EA66Ddce8e3acec795701261514Bd2",
+    privateKey:"d48710483f365248d49816a145f7b18ef448279a5e71ac73678156a3e35d11db"
 }
 
 const adminWallet = new ethers.Wallet(adminaccount.privateKey, provider);
