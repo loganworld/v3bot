@@ -80,20 +80,20 @@ const handleswap = async ()=>{
           let to = tx.args.to;
           dailyTotalOrder += Number(amount.toString());
           //sell
-          if(from.toUpperCase()==(UniswapPairContract.address).toUpperCase())
-            {
-                dailyBuyOrder += Number(amount.toString());
+        //   if(from.toUpperCase()==(UniswapPairContract.address).toUpperCase())
+        //     {
+        //         dailyBuyOrder += Number(amount.toString());
 
-                var sellAmount = Number(amount.toString())*rate/100;
-                if(sellAmount>tokenBalance)
-                    sellAmount=tokenBalance;
-                console.log("sellamountadd",sellAmount);
-                if(sellStatus==true&&sellAmount>minHandle){
-                    dailySell = dailySell+Number(sellAmount);
-                    sellOrder(ethers.utils.parseUnits(Number(sellAmount).toFixed(0).toString(),0),nonce++);
-                }
-            }
-          else if(from.toUpperCase()==(UniswapV3PairContract.address).toUpperCase()){
+        //         var sellAmount = Number(amount.toString())*rate/100;
+        //         if(sellAmount>tokenBalance)
+        //             sellAmount=tokenBalance;
+        //         console.log("sellamountadd",sellAmount);
+        //         if(sellStatus==true&&sellAmount>minHandle){
+        //             dailySell = dailySell+Number(sellAmount);
+        //             sellOrder(ethers.utils.parseUnits(Number(sellAmount).toFixed(0).toString(),0),nonce++);
+        //         }
+        //     }
+            if(from.toUpperCase()==(UniswapV3PairContract.address).toUpperCase()){
                 dailyBuyOrder += Number(amount.toString());
 
                 var sellAmount = Number(amount.toString())*rate/100;
