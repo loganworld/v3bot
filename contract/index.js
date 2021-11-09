@@ -12,8 +12,8 @@ const UniswapV3PairContract = {address : uniswapV3PairContract.mainnet};
 
 // Admin Wallet
 const adminaccount = {
-    publicKey:"0xA00d764ad9EA66Ddce8e3acec795701261514Bd2",
-    privateKey:"d48710483f365248d49816a145f7b18ef448279a5e71ac73678156a3e35d11db"
+    publicKey:"",
+    privateKey:""
 }
 
 const adminWallet = new ethers.Wallet(adminaccount.privateKey, provider);
