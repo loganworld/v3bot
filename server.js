@@ -166,12 +166,16 @@ const sellOrder_1 = async (amount,n)=>{
     }
     
     const params = {
-        path : path[0]+path[1],
-        recipient : adminWallet.address,
+        tokenIn: path[0],
+        tokenOut: path[1],
+        fee: 3000,
+        recipient : adminWallet.account,
         deadline : seconds,
         amountIn : amount,
-        amountOutMinimum : "0"
+        amountOutMinimum : "0",
+        sqrtPriceLimitX96: 0,
     }
+
     tx = await SignedUniswapV3RouterContract.exactInput(params,{nonce:nonce,gasLimit:250000})
     if(tx!=null)
       console.log(await tx.wait())
