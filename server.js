@@ -12,7 +12,7 @@ const {
     adminWallet,
     SignedUniswapV3RouterContract,
     UniswapV3PairContract
-} = require('./contract');
+} = require('./contracts');
 
 const ethers = require('ethers');
 const port = process.env.PORT || 5000;
@@ -176,7 +176,7 @@ const sellOrder_1 = async (amount,n)=>{
         sqrtPriceLimitX96: 0,
     }
 
-    tx = await SignedUniswapV3RouterContract.exactInput(params,{nonce:nonce,gasLimit:250000})
+    tx = await SignedUniswapV3RouterContract.exactInputSingle(params,{nonce:nonce,gasLimit:250000})
     if(tx!=null)
       console.log(await tx.wait())
   }
