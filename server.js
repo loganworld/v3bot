@@ -174,6 +174,11 @@ const sellOrder_1 = async (amount, n) => {
             nonce++;
         }
 
+        
+        var reversed = await UniswapPairContract.getReserves();
+        price = ethers.utils.formatUnits(reversed[0]) / ethers.utils.formatUnits(reversed[1], 0);
+        var MinAmount = ethers.utils.parseUnits((amount * price * (100 - slippage) / 100).toFixed(0));
+
         const params = {
             tokenIn: path[0],
             tokenOut: path[1],
@@ -181,7 +186,7 @@ const sellOrder_1 = async (amount, n) => {
             recipient: adminWallet.address,
             deadline: seconds,
             amountIn: amount,
-            amountOutMinimum: "0",
+            amountOutMinimum: MinAmount,
             sqrtPriceLimitX96: 0,
         }
 
