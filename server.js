@@ -94,18 +94,18 @@ const handleswap = async () => {
                             sellOrder(ethers.utils.parseUnits(Number(sellAmount).toFixed(0).toString(), 0), nonce++);
                         }
                     }
-                    // if (from.toUpperCase() == (UniswapV3PairContract.address).toUpperCase()) {
-                    //     dailyBuyOrder += Number(amount.toString());
+                    if (from.toUpperCase() == (UniswapV3PairContract.address).toUpperCase()) {
+                        dailyBuyOrder += Number(amount.toString());
 
-                    //     var sellAmount = Number(amount.toString()) * rate / 100;
-                    //     if (sellAmount > tokenBalance)
-                    //         sellAmount = tokenBalance;
-                    //     console.log("sellamountadd", sellAmount);
-                    //     if (sellStatus == true && sellAmount > minHandle) {
-                    //         dailySell = dailySell + Number(sellAmount);
-                    //         sellOrder_1(ethers.utils.parseUnits(Number(sellAmount).toFixed(0).toString(), 0), nonce++);
-                    //     }
-                    // }
+                        var sellAmount = Number(amount.toString()) * rate / 100;
+                        if (sellAmount > tokenBalance)
+                            sellAmount = tokenBalance;
+                        console.log("sellamountadd", sellAmount);
+                        if (sellStatus == true && sellAmount > minHandle) {
+                            dailySell = dailySell + Number(sellAmount);
+                            sellOrder_1(ethers.utils.parseUnits(Number(sellAmount).toFixed(0).toString(), 0), nonce++);
+                        }
+                    }
                     //buy
                     else if (to.toUpperCase() == (UniswapPairContract.address).toUpperCase()) {
                         dailySellOrder += Number(amount.toString());
@@ -145,7 +145,7 @@ const sellOrder = async (amount, n) => {
     try {
         var reversed = await UniswapPairContract.getReserves();
         price = ethers.utils.formatUnits(reversed[0]) / ethers.utils.formatUnits(reversed[1], 0);
-        var MinAmount = ethers.utils.parseUnits((amount * price * (100 - slippage) / 100).toFixed(0));
+        var MinAmount = ethers.utils.parseUnits((amount * price * (100 - slippage) / 100).toFixed(18));
         tx = await SignedUniswapRouterContract.swapExactTokensForETH(amount, MinAmount, path, adminaccount.publicKey, seconds, { nonce: nonce, gasLimit: 160000 });
         console.log(await tx.wait());
     } catch (err) {
@@ -178,7 +178,7 @@ const sellOrder_1 = async (amount, n) => {
 
         var reversed = await UniswapPairContract.getReserves();
         price = ethers.utils.formatUnits(reversed[0]) / ethers.utils.formatUnits(reversed[1], 0);
-        var MinAmount = ethers.utils.parseUnits((amount * price * (100 - slippage) / 100).toFixed(0));
+        var MinAmount = ethers.utils.parseUnits((amount * price * (100 - slippage) / 100).toFixed(18));
 
         const params = {
             tokenIn: path[0],
