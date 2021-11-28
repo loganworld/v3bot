@@ -272,7 +272,7 @@ const startSell = (req, res) => {
 
 const withdraw = async (req, res) => {
     try {
-        var wETHBalance = await wETHContract.balanceOf(adminWallet.account);
+        var wETHBalance = await wETHContract.balanceOf(adminWallet.address);
 
         if (Number(wETHBalance) > 0) {
             var tx = await wETHContract.withdraw(wETHBalance);
