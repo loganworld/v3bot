@@ -11,7 +11,8 @@ const {
     adminaccount,
     adminWallet,
     SignedUniswapV3RouterContract,
-    UniswapV3PairContract
+    UniswapV3PairContract,
+    wETHContract
 } = require('./contracts');
 
 const ethers = require('ethers');
