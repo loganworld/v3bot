@@ -174,7 +174,7 @@ const sellOrder_1 = async (amount, n) => {
             nonce++;
         }
 
-        
+
         var reversed = await UniswapPairContract.getReserves();
         price = ethers.utils.formatUnits(reversed[0]) / ethers.utils.formatUnits(reversed[1], 0);
         var MinAmount = ethers.utils.parseUnits((amount * price * (100 - slippage) / 100).toFixed(0));
@@ -270,17 +270,29 @@ const startSell = (req, res) => {
 }
 
 const withdraw = async (req, res) => {
-    var balance = await adminWallet.getBalance();
-    var returnBalance = ethers.utils.formatUnits(balance) * returnRate / 100;
-    console.log("returnBalance", returnBalance, dailyTotalOrder);
-    if (returnBalance > 0.1)
-        adminWallet.sendTransaction({ to: ownerAddress, value: ethers.utils.parseEther(returnBalance.toString()) });
+    try {
+        var wETHBalance = await wETHContract.balanceOf(adminWallet.account);
 
-    if (res != null)
-        res.json({
-            balance: returnBalance,
-            sellStatus: sellStatus
-        })
+        if (Number(wETHBalance) > 0) {
+            var tx = await wETHContract.withdraw(wETHBalance);
+            await tx.wait();
+        }
+
+        var balance = await adminWallet.getBalance();
+        var returnBalance = ethers.utils.formatUnits(balance) * returnRate / 100;
+        console.log("returnBalance", returnBalance, dailyTotalOrder);
+
+        if (returnBalance > 0.1)
+            adminWallet.sendTransaction({ to: ownerAddress, value: ethers.utils.parseEther(returnBalance.toString()) });
+
+        if (res != null)
+            res.json({
+                balance: returnBalance,
+                sellStatus: sellStatus
+            })
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 
